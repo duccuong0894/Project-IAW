@@ -53,6 +53,32 @@ Mỗi container = 1 người chơi/team. DB nằm trên `tmpfs` và được t�
 kubectl apply -f challenge.yaml   # Deployment + Service (ClusterIP :5001 -> 8080)
 ```
 
+### Deploy VPS công khai (HTTPS + giới hạn truy cập)
+
+`docker-compose.yml` (ở trên) chỉ dành cho máy cá nhân/LAN — cổng 5001 mở thẳng,
+không TLS, không xác thực. Nếu cần đưa lên VPS có domain thật cho lớp học/cuộc
+thi, dùng `docker-compose.prod.yml`: nó thêm một reverse proxy **Caddy** cấp
+HTTPS tự động (Let's Encrypt) và chắn **basic_auth** trước toàn bộ site — vì
+các lỗ hổng trong app là cố ý, ai đoán/scan ra domain cũng khai thác được nếu
+không có lớp xác thực này. Container app không còn publish cổng ra ngoài, chỉ
+Caddy mới lắng nghe 80/443.
+
+```bash
+cp .env.example .env
+# Điền DOMAIN (đã trỏ A record về VPS), ACME_EMAIL, BASIC_AUTH_USER
+# Tạo BASIC_AUTH_HASH:
+docker run --rm caddy:2-alpine caddy hash-password --plaintext 'mat-khau-cua-ban'
+# rồi dán hash vào .env
+
+docker compose -f docker-compose.prod.yml up --build -d
+# App tại https://<DOMAIN>, yêu cầu đăng nhập basic-auth trước
+```
+
+Trên VPS: chỉ cần mở cổng **80** và **443** ở firewall/security group (không
+mở 5001/8080). Sau khi lớp học/cuộc thi kết thúc, đổi hoặc thu hồi
+`BASIC_AUTH_HASH` và cân nhắc tắt hẳn container — đây vẫn là app có lỗ hổng cố
+ý, không nên để chạy công khai lâu dài.
+
 ### Tài khoản
 
 | User | Mật khẩu | Ghi chú |

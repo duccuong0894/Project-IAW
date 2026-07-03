@@ -5,24 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Antiqua Library - Kho Thư Tịch Cổ</title>
   <meta name="description" content="Kho luu tru thu tich co - tra cuu, dau gia va suu tam sach hiem" />
-  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="/static/css/style.css?v=2" />
   <!-- Thư viện hiệu ứng chuyển động -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
-<body>
-  <!-- Background Banner Hero hoành tráng -->
-  <div class="hero-banner animate__animated animate__fadeIn">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <div class="hero-logo animate__animated animate__zoomIn">
-        <i data-lucide="library" class="library-logo"></i>
-      </div>
-      <h1 class="animate__animated animate__fadeInDown">ANTIQUA LIBRARY</h1>
-      <p class="subtitle animate__animated animate__fadeInUp">Kho thư tịch hiếm &mdash; tra cứu, đấu giá, sưu tầm.</p>
-    </div>
-  </div>
-
-  <header class="header">
+<body class="home-body">
+  <header class="header transparent-header">
     <div class="header-inner">
       <nav class="nav">
         <a href="/">
@@ -41,7 +29,14 @@
     </div>
   </header>
 
-  <main class="main">
+  <main class="main home-main">
+    <div class="home-hero animate__animated animate__fadeIn">
+      <div class="hero-logo animate__animated animate__zoomIn">
+        <i data-lucide="library" class="library-logo"></i>
+      </div>
+      <h1 class="animate__animated animate__fadeInDown">ANTIQUA LIBRARY</h1>
+      <p class="subtitle animate__animated animate__fadeInUp">Kho thư tịch hiếm &mdash; tra cứu, đấu giá, sưu tầm.</p>
+    </div>
     <div class="search-section animate__animated animate__fadeInUp">
       <p class="label"><i data-lucide="scroll" class="section-icon"></i> Nhập tên thư tịch để tra cứu trong kho lưu trữ</p>
       
@@ -55,17 +50,10 @@
 
       <div class="ornament animate__animated animate__fadeIn animate__delay-1s">&loz; &bull; &loz;</div>
 
-      <div class="results-panel animate__animated animate__fadeInUp animate__delay-1s">
-        <div class="results-header">
-          <i data-lucide="terminal" class="terminal-icon"></i>
-          <span>BẢNG KẾT QUẢ TRUY VẤN</span>
-        </div>
-        <pre id="out">// Kết quả tra cứu sẽ hiển thị ở đây...</pre>
-      </div>
     </div>
   </main>
 
-  <footer class="footer">
+  <footer class="footer transparent-footer">
     <div class="footer-content">
       <p>Antiqua Library &copy; 2025 &mdash; Dự án CTF Giáo Dục IAW</p>
       <div class="footer-ornament">&bull; &bull; &bull;</div>
@@ -75,8 +63,8 @@
   <!-- Thư viện bổ trợ CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
-  <script src="/static/js/modal.js"></script>
-  <script src="/static/js/app.js"></script>
+  <script src="/static/js/modal.js?v=2"></script>
+  <script src="/static/js/app.js?v=2"></script>
   <script>
     // Khởi tạo Lucide Icons
     lucide.createIcons();

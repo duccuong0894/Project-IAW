@@ -133,3 +133,38 @@ function showModalMulti(results, opts = {}) {
 function escapeHtml(str) {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
+
+// Tự động kiểm tra session cookie và cập nhật thanh điều hướng (Navbar)
+(function () {
+  const cookies = document.cookie.split(';');
+  let username = null;
+  for (let c of cookies) {
+    c = c.trim();
+    if (c.startsWith('antiqua_session=')) {
+      username = decodeURIComponent(c.substring('antiqua_session='.length));
+      break;
+    }
+  }
+  if (username) {
+    const nav = document.querySelector('.nav');
+    if (nav) {
+      const links = nav.getElementsByTagName('a');
+      for (let link of links) {
+        const href = link.getAttribute('href');
+        // Đối với trang chủ: Đổi "Đăng nhập" thành "Đăng xuất (username)"
+        if (href === '/login') {
+          link.setAttribute('href', '/logout');
+          link.innerHTML = `<i data-lucide="log-out"></i> Đăng xuất (${username})`;
+        }
+        // Đối với các trang con: Thêm username vào "Đăng xuất"
+        else if (href === '/logout') {
+          link.innerHTML = `<i data-lucide="log-out"></i> Đăng xuất (${username})`;
+        }
+      }
+      // Khởi chạy lại Lucide Icons nếu có thư viện
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+    }
+  }
+})();

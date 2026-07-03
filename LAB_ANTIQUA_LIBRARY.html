@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab 03 — Antiqua Library - Instruction Sheet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --primary-red: #d62828;
+      --secondary-blue: #3a86c8;
+      --success-green: #15803d;
+      --success-green-bg: #f0fdf4;
+      --success-green-border: #bbf7d0;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-light: #f9fafb;
+      --border-color: #e5e7eb;
+      --card-blue-bg: #eff6ff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-dark);
+      background-color: #f3f4f6;
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 50px 60px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      position: relative;
+    }
+
+    /* Print styling */
+    @media print {
+      body {
+        background-color: #ffffff;
+        padding: 0;
+      }
+
+      .container {
+        box-shadow: none;
+        padding: 20px 0;
+        max-width: 100%;
+      }
+    }
+
+    /* Header section */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .header-left {
+      flex: 1;
+    }
+
+    .event-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--primary-red);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #111827;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .tags-container {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .tag {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--secondary-blue);
+      text-decoration: none;
+    }
+
+    .tag:not(:last-child)::after {
+      content: "";
+      display: inline-block;
+      width: 1px;
+      height: 10px;
+      background-color: var(--border-color);
+      margin-left: 12px;
+      vertical-align: middle;
+    }
+
+    .header-right {
+      text-align: right;
+    }
+
+    .score {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--primary-red);
+      line-height: 1;
+    }
+
+    .score-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-top: 4px;
+    }
+
+    .divider {
+      height: 2px;
+      background-color: var(--primary-red);
+      margin-bottom: 35px;
+    }
+
+    /* General section headers */
+    .section-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--primary-red);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .section-block {
+      margin-bottom: 40px;
+    }
+
+    /* Scenario / Kịch bản styling */
+    .scenario-box {
+      border-left: 4px solid var(--secondary-blue);
+      background-color: var(--card-blue-bg);
+      padding: 24px 28px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .scenario-box p {
+      margin-bottom: 16px;
+      font-size: 0.95rem;
+      color: #374151;
+    }
+
+    .scenario-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Flag format styling */
+    .flag-box {
+      background-color: var(--success-green-bg);
+      border: 1px dashed var(--success-green-border);
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .flag-format-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-right: 15px;
+      display: inline-block;
+    }
+
+    .flag-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--success-green);
+      display: inline-block;
+    }
+
+    .flag-note {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Table styling */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+    }
+
+    .endpoints-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    .endpoints-table th {
+      background-color: var(--bg-light);
+      font-weight: 700;
+      color: var(--text-dark);
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .endpoints-table td {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: top;
+    }
+
+    .endpoints-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .endpoint-path {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--primary-red);
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+
+    .endpoint-method {
+      display: inline-block;
+      padding: 2px 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 4px;
+      background-color: #f3f4f6;
+      color: #4b5563;
+      margin-top: 4px;
+    }
+
+    .endpoint-method.post {
+      background-color: #ecfdf5;
+      color: #059669;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      border-radius: 4px;
+      margin-bottom: 6px;
+    }
+
+    .badge.red {
+      background-color: #fee2e2;
+      color: #ef4444;
+    }
+
+    .badge.blue {
+      background-color: #dbeafe;
+      color: #2563eb;
+    }
+
+    .badge.green {
+      background-color: #d1fae5;
+      color: #059669;
+    }
+
+    /* Hints grid */
+    .hints-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 640px) {
+      .hints-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hint-card {
+      border: 1px solid var(--border-color);
+      border-top: 4px solid var(--secondary-blue);
+      border-radius: 0 0 6px 6px;
+      padding: 20px 24px;
+      background-color: #ffffff;
+    }
+
+    .hint-num {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .hint-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #111827;
+      margin-bottom: 10px;
+    }
+
+    .hint-text {
+      font-size: 0.85rem;
+      color: #4b5563;
+      line-height: 1.5;
+    }
+
+    /* Rules / Lưu ý section */
+    .rules-list {
+      list-style: none;
+    }
+
+    .rules-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+      color: #374151;
+    }
+
+    .rules-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 6px;
+      height: 6px;
+      background-color: var(--primary-red);
+      border-radius: 50%;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .footer-right {
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <div class="event-tag">IAW 2026 &middot; Web Exploitation</div>
+        <h1 class="title">Antiqua Library</h1>
+        <div class="subtitle">Multi-stage Web Exploitation Challenge</div>
+        <div class="tags-container">
+          <span class="tag">SQL Injection</span>
+          <span class="tag">Integer Overflow</span>
+          <span class="tag">Race Condition (TOCTOU)</span>
+          <span class="tag">SQLite</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="score"></div>
+        <div class="score-label"></div>
+      </div>
+    </header>
+
+    <div class="divider"></div>
+
+    <!-- Scenario / Kịch bản -->
+    <section class="section-block">
+      <h2 class="section-title">Kịch bản</h2>
+      <div class="scenario-box">
+        <p>Đằng sau những kệ sách bám bụi của <strong>Thư Viện Antiqua</strong> là một hệ thống đấu giá và tra cứu thư
+          tịch cổ đã vận hành suốt nhiều thập kỷ. Hệ thống cũ kỹ này đang lưu giữ ba tài liệu tuyệt mật (tương ứng với 3
+          Flag) của vương triều Antiqua.</p>
+        <p>Hệ thống được thiết kế dưới dạng <strong>chuỗi thử thách 3 màn nối tiếp nhau</strong>. Bạn không thể đi tắt;
+          mỗi màn sau khi vượt qua sẽ cung cấp một mã thông hành (token) bí mật trong phản hồi của server. Mã thông hành
+          này chính là chìa khóa để bạn tương tác và khai thác màn tiếp theo.</p>
+        <p>Nhiệm vụ của bạn là đóng vai một nhà sưu tầm sách cổ (<code>seeker</code>), thâm nhập hệ thống, tìm cách vượt
+          qua các lớp bảo mật để <strong>thu thập đủ 3 Flag</strong>.</p>
+      </div>
+    </section>
+
+    <!-- Flag Format -->
+    <section class="section-block">
+      <h2 class="section-title">Flag Format</h2>
+      <div class="flag-box">
+        <span class="flag-format-label">FORMAT</span>
+        <span class="flag-value">IAW{xxxxxxxxxxxxxxxx}</span>
+      </div>
+      <p class="flag-note">Flag nằm trong cơ sở dữ liệu và phản hồi giao dịch. Hãy phân tích kỹ để tránh các flag giả
+        gây nhiễu được cài cắm trong hệ thống.</p>
+    </section>
+
+    <!-- Endpoints -->
+    <section class="section-block">
+      <h2 class="section-title">Các Endpoint đáng chú ý</h2>
+      <div class="table-container">
+        <table class="endpoints-table">
+          <thead>
+            <tr>
+              <th>ENDPOINT</th>
+              <th>CHỨC NĂNG</th>
+              <th>ĐẶC ĐIỂM</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <span class="endpoint-path">/search?q=</span><br>
+                <span class="endpoint-method">GET</span>
+              </td>
+              <td>Tra cứu thư tịch cổ theo từ khóa trong kho</td>
+              <td>
+                <span class="badge red">SQL Injection</span><br>
+                Không hiển thị lỗi trực tiếp trên giao diện nhưng lỗi SQL và dữ liệu rò rỉ vẫn nằm nguyên vẹn trong HTTP
+                Response (xem Network tab).
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="endpoint-path">/catalog</span><br>
+                <span class="endpoint-method">GET</span>
+              </td>
+              <td>Xem danh mục sách hiện có</td>
+              <td>
+                Trả về dữ liệu JSON chứa danh sách sách kèm tác giả, giá tiền và cờ hạn chế (restricted).
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="endpoint-path">/buy</span><br>
+                <span class="endpoint-method post">POST</span>
+              </td>
+              <td>Gửi yêu cầu mua sách</td>
+              <td>
+                <span class="badge blue">Integer Overflow</span><br>
+                Yêu cầu tham số quantity và mã ủy quyền reserve (lấy từ Màn 1). Hệ thống biên dịch ở chế độ release cho
+                phép tràn số.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="endpoint-path">/bids/ticket</span><br>
+                <span class="endpoint-method post">POST</span>
+              </td>
+              <td>Đăng ký vé kết sổ phiên đấu giá</td>
+              <td>
+                Cấp mã ticket dùng một lần (nonce). Cần cung cấp mã bidder_pass (lấy từ Màn 2).
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="endpoint-path">/bids/settle</span><br>
+                <span class="endpoint-method post">POST</span>
+              </td>
+              <td>Thực hiện kết sổ phiên đấu giá</td>
+              <td>
+                <span class="badge green">Race Condition</span><br>
+                Có khoảng trễ 250ms giữa lúc đọc dữ liệu và lúc lưu trạng thái phiên đấu giá.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Hints -->
+    <section class="section-block">
+      <h2 class="section-title">Gợi ý</h2>
+      <div class="hints-grid">
+        <!-- Card 1 -->
+        <div class="hint-card">
+          <div class="hint-num">Hint 01</div>
+          <h3 class="hint-title">Quan sát phản hồi</h3>
+          <p class="hint-text">Không phải mọi dữ liệu server xử lý đều được phơi bày trực tiếp trên trang web. Hãy chú ý
+            đến những gì được truyền tải ngầm bên dưới.</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="hint-card">
+          <div class="hint-num">Hint 02</div>
+          <h3 class="hint-title">Giới hạn tính toán</h3>
+          <p class="hint-text">Khi số lượng hàng hóa nhân lên quá lớn, máy tính có thể gặp khó khăn trong việc lưu giữ
+            giá trị thực tế. Hãy thử tìm điểm giới hạn đó.</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="hint-card">
+          <div class="hint-num">Hint 03</div>
+          <h3 class="hint-title">Thời điểm vàng</h3>
+          <p class="hint-text">Quy trình kiểm tra trạng thái và chốt kết quả luôn cần một khoảng thời gian xử lý nhỏ.
+            Liệu bạn có thể can thiệp vào giữa khoảng thời gian đó?</p>
+        </div>
+        <!-- Card 4 -->
+        <div class="hint-card">
+          <div class="hint-num">Hint 04</div>
+          <h3 class="hint-title">Tốc độ và sự chính xác</h3>
+          <p class="hint-text">Với các phép toán phức tạp hoặc yêu cầu phản hồi mạng trong tích tắc, các thao tác thủ
+            công qua giao diện thông thường sẽ không bao giờ là đủ.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Notes -->
+    <section class="section-block">
+      <h2 class="section-title">Lưu ý</h2>
+      <ul class="rules-list">
+        <li>Chỉ khai thác trên instance được cấp phát riêng của bạn, không tấn công sang các instance của thí sinh khác.
+        </li>
+        <li>Không thực hiện các kỹ thuật gây mất ổn định dịch vụ hoặc phá hoại cơ sở dữ liệu (như DoS, DDoS,
+          <code>DROP TABLE</code>,...).
+        </li>
+        <li>Flag phân biệt chữ hoa/thường &mdash; hãy submit chính xác chuỗi tìm được vào hệ thống.</li>
+        <li>Được phép dùng script tự động hóa (Python, Go, Bash,...) để tăng tốc khai thác.</li>
+        <li>Nếu lỡ làm thay đổi trạng thái đấu giá (Màn 3 đã đóng), bạn có thể reset lại trạng thái lab thông qua
+          endpoint <code>/admin/reset</code> kèm token cấu hình.</li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-left">IAW 2026 &middot; Lab Antiqua Library</div>
+      <div class="footer-right">Không chia sẻ tài liệu này ra ngoài phòng thi</div>
+    </footer>
+  </div>
+
+</body>
+
+</html>

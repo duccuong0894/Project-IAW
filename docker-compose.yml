@@ -3,9 +3,9 @@ services:
     build: .
     image: antiqua-library:latest
     ports:
-      - "5001:8080"
+      - "5001:5000"
     read_only: true
     user: "1000"
     tmpfs:
-      - /tmp/db:uid=1000,gid=1000,mode=1777
+      - /tmp:uid=1000,gid=1000,mode=1777
     restart: unless-stopped

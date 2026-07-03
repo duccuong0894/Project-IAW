@@ -1,15 +1,10 @@
-// Tra cứu thư tịch — trang chủ CHỈ hiển thị một dòng trạng thái chung, không
-// liệt kê bản ghi và không mở modal. Muốn đọc dữ liệu rò rỉ (Act 1 SQLi),
-// người chơi phải tự soi response gốc qua DevTools -> Network hoặc curl/Postman.
-// Backend vẫn giữ nguyên lỗ hổng: cả kết quả lẫn thông báo lỗi SQL vẫn nằm đầy
-// đủ trong HTTP response, chỉ là giao diện không phơi ra.
+// Tra cứu thư tịch — hiển thị kết quả qua modal popup.
 async function doSearch() {
   const query = document.getElementById('q').value;
-  const out = document.getElementById('out');
   const r = await fetch(`/search?q=${encodeURIComponent(query)}`);
   const data = await r.json();
 
-  out.textContent = buildMessage(data);
+  showModal(data, { title: 'Kết quả tra cứu' });
 }
 
 // Trả về một dòng trạng thái đơn giản — không bao giờ lộ nội dung bản ghi
